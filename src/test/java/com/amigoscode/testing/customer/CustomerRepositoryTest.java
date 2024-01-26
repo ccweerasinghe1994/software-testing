@@ -78,11 +78,11 @@ class CustomerRepositoryTest {
         UUID id = UUID.randomUUID();
         Customer customer = new Customer(id, null, "0000");
 
-        // When
         // Then
         assertThatThrownBy(() -> underTest.save(customer))
                 .hasMessageContaining("not-null property references a null or transient value : com.amigoscode.testing.customer.Customer.name")
                 .isInstanceOf(DataIntegrityViolationException.class);
+
 
     }
 
@@ -90,13 +90,13 @@ class CustomerRepositoryTest {
     void itShouldNotSaveCustomerWhenPhoneNumberIsNull() {
         // Given
         UUID id = UUID.randomUUID();
-        Customer customer = new Customer(id, "Alex", null);
+        Customer customer = new Customer(id, "Andera", null);
 
-        // When
         // Then
         assertThatThrownBy(() -> underTest.save(customer))
                 .hasMessageContaining("not-null property references a null or transient value : com.amigoscode.testing.customer.Customer.phoneNumber")
                 .isInstanceOf(DataIntegrityViolationException.class);
 
     }
+
 }
