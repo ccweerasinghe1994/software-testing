@@ -45,7 +45,6 @@ class CustomerRepositoryTest {
 
 //                    use isEqualToComparingFieldByField to check each field
 
-                    
                     assertThat(customer).isEqualToComparingFieldByField(jamila);
                 }
         );
