@@ -12,10 +12,19 @@ public class CustomerRegistrationService {
         this.customerRepository = customerRepository;
     }
 
-    public void registerNewCustomer(CustomerRegistrationRequest request) {
-        customerRepository.findById(request.getCustomer().getId())
-                .ifPresent(customer -> {
-                    throw new IllegalStateException("Customer already exists");
-                });
+    public void registerNewCustomer(CustomerRegistrationRequest request) throws IllegalStateException {
+        String requestPhoneNumber = request.getCustomer().getPhoneNumber();
+        customerRepository.selectCustomerByPhoneNumber(requestPhoneNumber)
+                .ifPresentOrElse(customer -> {
+                    String requestCustomerName = request.getCustomer().getName();
+                    if (customer.getName().equals(requestCustomerName)) {
+                        System.out.println("Customer already exists");
+                    } else {
+                        throw new IllegalStateException("phone number taken");
+                    }
+                }, () -> {
+                    customerRepository.save(request.getCustomer());
+                })
+        ;
     }
 }
