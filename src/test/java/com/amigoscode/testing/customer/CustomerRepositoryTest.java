@@ -52,7 +52,7 @@ class CustomerRepositoryTest {
     void itShouldNotSelectCustomerByPhoneNumberWhenPhoneNumberDoesntExists() {
         // given
         String phoneNumber = "123456789";
-        
+
         // when
         Optional<Customer> optionalCustomer = underTest.selectCustomerByPhoneNumber(phoneNumber);
 
@@ -88,21 +88,6 @@ class CustomerRepositoryTest {
         );
 
     }
-
-//    TODO
-
-    @Test
-    void itNotShouldSelectCustomerByPhoneNumberWhenNumberDoesNotExists() {
-        // Given
-        String phoneNumber = "0000";
-
-        // When
-        Optional<Customer> optionalCustomer = underTest.selectCustomerByPhoneNumber(phoneNumber);
-
-        // Then
-        assertThat(optionalCustomer).isNotPresent();
-    }
-
 
     @Test
     void itShouldNotSaveCustomerWhenNameIsNull() {
