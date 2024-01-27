@@ -24,8 +24,40 @@ class CustomerRepositoryTest {
     @Test
     void itShouldSelectCustomerByPhoneNumber() {
         // given
+        UUID id = UUID.randomUUID();
+        String phoneNumber = "123456789";
+        Customer jamila = new Customer(id, "Jamila", phoneNumber);
+
         // when
+        underTest.save(jamila);
+
         // then
+        Optional<Customer> optionalCustomer = underTest.selectCustomerByPhoneNumber(phoneNumber);
+        assertThat(optionalCustomer).isPresent().hasValueSatisfying(
+                customer -> {
+
+//                    manually check each field
+
+                    assertThat(customer.getId()).isEqualTo(id);
+                    assertThat(customer.getName()).isEqualTo("Jamila");
+                    assertThat(customer.getPhoneNumber()).isEqualTo("123456789");
+
+//                    use isEqualToComparingFieldByField to check each field
+                    assertThat(customer).isEqualToComparingFieldByField(jamila);
+                }
+        );
+    }
+
+    @Test
+    void itShouldNotSelectCustomerByPhoneNumberWhenPhoneNumberDoesntExists() {
+        // given
+        String phoneNumber = "123456789";
+        
+        // when
+        Optional<Customer> optionalCustomer = underTest.selectCustomerByPhoneNumber(phoneNumber);
+
+        // then
+        assertThat(optionalCustomer).isNotPresent();
     }
 
     @Test
